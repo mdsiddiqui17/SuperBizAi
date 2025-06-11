@@ -1,0 +1,19 @@
+
+.sidebar {
+  width: 220px;
+  background-color: #1d2d44;
+  padding: 20px;
+  color: #f0ebd8;
+}
+.sidebar h2 {
+  margin-bottom: 1.5rem;
+}
+.sidebar nav a {
+  display: block;
+  margin: 10px 0;
+  color: #f0ebd8;
+  text-decoration: none;
+}
+.sidebar nav a:hover {
+  color: #748cab;
+}

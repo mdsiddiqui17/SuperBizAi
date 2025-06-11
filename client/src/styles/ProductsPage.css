@@ -1,0 +1,24 @@
+
+.smart-product-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+}
+
+.card {
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-img-top {
+  border-bottom: 1px solid #ddd;
+}
+
+.card-footer {
+  background: #fafafa;
+}

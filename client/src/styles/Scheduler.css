@@ -1,0 +1,53 @@
+.scheduler-page {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.new-post-btn {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #1d2d44;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.scheduled-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.scheduled-card {
+  background: #f0f0f0;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.post-editor {
+  margin-top: 2rem;
+  background: #e6e6e6;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.post-editor textarea,
+.post-editor input,
+.post-editor select {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.6rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.editor-buttons button {
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}

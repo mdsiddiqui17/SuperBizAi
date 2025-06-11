@@ -1,0 +1,20 @@
+.content-setup-page {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+.content-setup-page h2 {
+  text-align: center;
+}
+.content-setup-page form {
+  display: flex;
+  flex-direction: column;
+}
+.content-setup-page input,
+.content-setup-page textarea,
+.content-setup-page button {
+  margin: 10px 0;
+  padding: 10px;
+}

@@ -1,0 +1,16 @@
+
+.sync-calendar-btn {
+  background-color: #3e5c76;
+  color: #f0ebd8;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+.sync-calendar-btn:hover {
+  background-color: #748cab;
+}

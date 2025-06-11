@@ -1,0 +1,67 @@
+
+.leads-page {
+  padding: 20px;
+  color: #f0ebd8;
+  background-color: #0d1321;
+  min-height: 100vh;
+}
+.lead-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.lead-controls input, .lead-controls select, .lead-controls button {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #3e5c76;
+  background-color: #1d2d44;
+  color: #f0ebd8;
+}
+.lead-controls button {
+  background-color: #3e5c76;
+  cursor: pointer;
+}
+.lead-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.lead-form input, .lead-form select, .lead-form textarea {
+  padding: 8px;
+  background-color: #1d2d44;
+  color: #f0ebd8;
+  border: 1px solid #3e5c76;
+  border-radius: 4px;
+  flex: 1;
+  min-width: 200px;
+}
+.lead-form button {
+  background-color: #3e5c76;
+  color: #f0ebd8;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.leads-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.leads-table th, .leads-table td {
+  border: 1px solid #748cab;
+  padding: 10px;
+  text-align: left;
+}
+.leads-table th {
+  background-color: #1d2d44;
+}
+.leads-table td button {
+  margin-right: 5px;
+  padding: 4px 8px;
+  background-color: #748cab;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
