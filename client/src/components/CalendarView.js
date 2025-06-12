@@ -97,6 +97,14 @@ Platforms: ${Array.isArray(post.platform) ? post.platform.join(', ') : (post.pla
       style.boxShadow = `${style.boxShadow ? style.boxShadow + ', ' : ''}0 0 10px #ffcc00`; // Add or append glow
     }
 
+    // Style for events with validation errors
+    if (event.originalPost && event.originalPost.hasValidationError === true) {
+      style.backgroundColor = '#f8d7da'; // Bootstrap's $danger-lgiht / light red
+      style.borderColor = '#dc3545';     // Bootstrap's $danger / red
+      style.color = '#721c24';           // Darker red text
+      style.borderWidth = '2px';
+    }
+
     const tooltipText = event.tooltipContent || event.title; // Use the new tooltipContent if available
 
     return {

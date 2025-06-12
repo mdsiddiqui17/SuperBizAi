@@ -1,16 +1,45 @@
+/* client/src/components/DashboardCard.css */
 
 .dashboard-card {
-  background-color: #1d2d44;
-  color: #f0ebd8;
-  padding: 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 10px rgba(116, 140, 171, 0.3);
-  text-align: center;
+  /* Ensures cards try to maintain same height in a row if using Bootstrap's default .row > * behavior */
+  display: flex;
+  flex-direction: column;
 }
 
-.dashboard-card:hover {
-  transform: scale(1.03);
-  background-color: #3e5c76;
+.dashboard-card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allows card body to grow and push button to bottom */
+}
+
+.dashboard-card .main-stat h2 {
+  font-size: 2.8rem; /* Slightly smaller than display-4 default for better fit */
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-card .main-stat p {
+  font-size: 0.9rem;
+}
+
+.dashboard-card .sub-stats-list {
+  font-size: 0.9rem;
+  border-top: 1px solid #eee;
+  padding-top: 0.5rem;
+}
+
+.dashboard-card .sub-stats-list li {
+  border-bottom: 1px dashed #f1f1f1;
+}
+.dashboard-card .sub-stats-list li:last-child {
+  border-bottom: none;
+}
+
+.dashboard-card .dashboard-card-icon {
+  opacity: 0.5;
+}
+
+.dashboard-card .btn.stretched-link {
+  margin-top: auto; /* Pushes button to the bottom of the card body */
+  align-self: flex-start; /* Aligns button to the start if card body is flex */
+  min-width: 120px; /* Ensure button has a decent minimum width */
 }
