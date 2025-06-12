@@ -21,7 +21,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const CalendarView = ({ posts, onSelectDate, onSelectPost }) => {
+const CalendarView = ({ posts, onSelectDate, onSelectPost, onReschedule }) => {
   // Event mapping and styling logic will go here in subsequent steps
 
   // Map posts to events for react-big-calendar
@@ -43,10 +43,12 @@ const CalendarView = ({ posts, onSelectDate, onSelectPost }) => {
       }
 
       acc.push({
-        title: post.contentType,
+        title: post.contentType, // This will be the displayed text on the event
         start: scheduledDate,
         end: scheduledDate, // Events are treated as points in time on the calendar
         allDay: false, // Assuming posts are not all-day events unless specified
+        tooltipContent: `Content: ${post.contentText || 'N/A'}
+Platforms: ${Array.isArray(post.platform) ? post.platform.join(', ') : (post.platform || 'N/A')}`,
         originalPost: post, // Store the original post data for callbacks
       });
       return acc;
@@ -62,6 +64,12 @@ const CalendarView = ({ posts, onSelectDate, onSelectPost }) => {
   };
 
   const eventStyleGetter = (event, start, end, isSelected) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize today's date to midnight
+
+    const eventStartDate = new Date(event.start);
+    eventStartDate.setHours(0, 0, 0, 0); // Normalize event start date
+
     const postType = event.originalPost?.contentType || 'default';
     const backgroundColor = contentTypeColors[postType] || contentTypeColors.default;
 
@@ -83,9 +91,28 @@ const CalendarView = ({ posts, onSelectDate, onSelectPost }) => {
       style.boxShadow = '0px 0px 5px rgba(0,0,0,0.3)';
     }
 
+    // Highlight if the event is for today
+    if (eventStartDate.getTime() === today.getTime()) {
+      style.border = `2px solid #ffcc00`; // A distinct yellow border
+      style.boxShadow = `${style.boxShadow ? style.boxShadow + ', ' : ''}0 0 10px #ffcc00`; // Add or append glow
+    }
+
+    const tooltipText = event.tooltipContent || event.title; // Use the new tooltipContent if available
+
     return {
       style,
+      title: tooltipText, // Attempt to add title attribute this way
     };
+  };
+
+  const handleEventDrop = ({ event, start, end }) => {
+    if (event.originalPost && event.originalPost._id) {
+      if (onReschedule) {
+        onReschedule(event.originalPost._id, start); // Pass postId and the new start Date
+      }
+    } else {
+      console.warn('Dropped event is missing originalPost data or _id.');
+    }
   };
 
   if (!posts) {
@@ -103,7 +130,8 @@ const CalendarView = ({ posts, onSelectDate, onSelectPost }) => {
         onSelectEvent={event => onSelectPost(event.originalPost)}
         onSelectSlot={slotInfo => onSelectDate(slotInfo.start)}
         selectable // Allows slot selection
-        eventPropGetter={eventStyleGetter} // Will be enabled after defining styles
+        eventPropGetter={eventStyleGetter}
+        onEventDrop={handleEventDrop}
         // More props like defaultView, views, etc., can be added as needed.
         defaultView="month"
         views={['month', 'week', 'day']}
