@@ -7,6 +7,21 @@ exports.generateContent = async (req, res) => {
   try {
     const { contentType, tone = 'neutral', colors = '', tags = '', numberOfPosts = 1, keywords = '' } = req.body;
 
+    const ALLOWED_CONTENT_TYPES = [
+      'blog_post',
+      'social_media_update',
+      'ad_copy',
+      'email_newsletter',
+      'product_description',
+      'Image' // Assuming 'Image' is also a valid type based on existing logic
+    ];
+
+    if (!contentType || !ALLOWED_CONTENT_TYPES.includes(contentType)) {
+      return res.status(400).json({
+        message: `Invalid contentType provided. Please use one of the allowed types: ${ALLOWED_CONTENT_TYPES.join(', ')}`
+      });
+    }
+
     const profile = await ContentProfile.findOne({ user: req.user.userId });
     if (!profile) return res.status(404).json({ message: 'Content profile not found' });
 

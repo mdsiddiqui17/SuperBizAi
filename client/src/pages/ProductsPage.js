@@ -6,8 +6,12 @@ import '../styles/ProductsPage.css';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchProducts = async () => {
+    setError(null);
+    setLoading(true);
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get('/api/products', {
@@ -16,21 +20,28 @@ const ProductsPage = () => {
       setProducts(res.data);
     } catch (err) {
       console.error('Error loading products:', err);
+      setError('Failed to load products. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
-
+    setError(null); // Clear previous errors specific to delete if any, or general page errors.
+    // setLoading(true); // Optional: if delete itself is long and doesn't immediately refetch.
+                     // fetchProducts will set its own loading state for the refresh.
     try {
       const token = localStorage.getItem('token');
       await axios.delete(`/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      fetchProducts();
+      fetchProducts(); // This will handle its own loading/error states for the product list refresh
     } catch (err) {
       console.error('Error deleting product:', err);
-      alert('Failed to delete product.');
+      // alert('Failed to delete product.'); // Replaced by setError
+      setError('Failed to delete product. Please try again.');
+      // setLoading(false); // Only if we set it true for the delete operation itself.
     }
   };
 
@@ -44,10 +55,12 @@ const ProductsPage = () => {
       <SmartProductForm onSuccess={fetchProducts} />
 
       <div className="row mt-4">
-        {products.length === 0 ? (
+        {loading && <p>Loading products...</p>}
+        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+        {!loading && !error && products.length === 0 && (
           <p>No products yet. Add one above.</p>
-        ) : (
-          products.map((product) => (
+        )}
+        {!loading && !error && products.map((product) => (
             <div className="col-md-4 mb-4" key={product._id}>
               <div className="card h-100 shadow-sm">
                 {product.imageUrl && (

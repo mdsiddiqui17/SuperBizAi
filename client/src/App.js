@@ -19,11 +19,17 @@ import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     setIsLoggedIn(!!storedUser);
+    setAuthLoading(false);
   }, []);
+
+  if (authLoading) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading application...</div>;
+  }
 
   return (
     <Router>
