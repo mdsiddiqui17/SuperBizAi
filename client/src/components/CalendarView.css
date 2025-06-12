@@ -1,0 +1,8 @@
+/* client/src/components/CalendarView.css */
+/* Hover effects and other custom styles will be added here */
+
+/* Example for event hover (can be more specific if needed) */
+.rbc-event:hover {
+  opacity: 1 !important;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
