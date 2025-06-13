@@ -53,7 +53,13 @@ const ProductiveSpaceNav = () => {
       >
         Workspace Links
       </NavLink>
-      {/* Add NavLink for TemplatesPage when it's ready */}
+      <NavLink
+        to="/productive-space/templates"
+        style={({ isActive }) => ({ ...navItemStyle, ...(isActive ? activeStyle : {}) })}
+        className="nav-link"
+      >
+        Templates
+      </NavLink>
     </nav>
   );
 };

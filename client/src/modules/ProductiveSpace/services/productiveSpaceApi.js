@@ -104,7 +104,22 @@ export const updateWorkspaceLink = (linkId, updateData) =>
 export const deleteWorkspaceLink = (linkId) =>
   axios.delete(`${API_BASE_URL}/links/${linkId}`, getAuthConfig());
 
-// Note: Template API functions will be added later if we proceed with Template Management frontend.
+// --- Template API Functions ---
+export const getTemplates = (params = {}) =>
+  axios.get(`${API_BASE_URL}/templates`, { ...getAuthConfig(), params });
+
+export const createTemplate = (templateData) =>
+  axios.post(`${API_BASE_URL}/templates`, templateData, getAuthConfig());
+
+export const getTemplateById = (templateId) =>
+  axios.get(`${API_BASE_URL}/templates/${templateId}`, getAuthConfig());
+
+export const updateTemplate = (templateId, updateData) =>
+  axios.put(`${API_BASE_URL}/templates/${templateId}`, updateData, getAuthConfig());
+
+export const deleteTemplate = (templateId) =>
+  axios.delete(`${API_BASE_URL}/templates/${templateId}`, getAuthConfig());
+// Note: Template API functions will be added later if we proceed with Template Management frontend. // This comment can be removed or updated
 
 // It might also be beneficial to create an Axios instance if you need more
 // complex global configurations (e.g., interceptors for error handling or token refresh)
