@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as api from '../services/productiveSpaceApi';
 import NoteForm from '../components/NoteForm';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 // Basic Modal Component (can be extracted or use a library like react-bootstrap-modal)
 const Modal = ({ children, isOpen, onClose, title }) => {
@@ -49,7 +49,7 @@ const NotesPage = () => {
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || 'Failed to fetch notes.';
       setError(errorMsg);
-      // toast.error(errorMsg);
+      toast.error(errorMsg);
       console.error("Fetch notes error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -81,20 +81,20 @@ const NotesPage = () => {
     try {
       if (editingNote && editingNote._id) {
         await api.updateNote(editingNote._id, noteData);
-        // toast.success('Note updated successfully!');
-        alert('Note updated successfully!');
+        toast.success('Note updated successfully!');
+        // alert('Note updated successfully!');
       } else {
         await api.createNote(noteData);
-        // toast.success('Note created successfully!');
-        alert('Note created successfully!');
+        toast.success('Note created successfully!');
+        // alert('Note created successfully!');
       }
       handleCloseModal();
       fetchNotes();
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || (editingNote ? 'Failed to update note.' : 'Failed to create note.');
       setError(errorMsg);
-      // toast.error(errorMsg);
-      alert(errorMsg);
+      toast.error(errorMsg);
+      // alert(errorMsg);
       console.error("Submit note error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -105,14 +105,14 @@ const NotesPage = () => {
     if (window.confirm('Are you sure you want to delete this note?')) {
       try {
         await api.deleteNote(noteId);
-        // toast.success('Note deleted successfully!');
-        alert('Note deleted successfully!');
+        toast.success('Note deleted successfully!');
+        // alert('Note deleted successfully!');
         fetchNotes();
       } catch (err) {
         const errorMsg = err.response?.data?.message || err.message || 'Failed to delete note.';
         setError(errorMsg);
-        // toast.error(errorMsg);
-        alert(errorMsg);
+        toast.error(errorMsg);
+        // alert(errorMsg);
         console.error("Delete note error:", errorMsg);
       }
     }

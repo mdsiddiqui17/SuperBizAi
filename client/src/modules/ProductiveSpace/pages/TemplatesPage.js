@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as api from '../services/productiveSpaceApi';
 import TemplateForm from '../components/TemplateForm';
-// import { toast } from 'react-toastify'; // Assuming toastify is globally available if used
+import { toast } from 'react-toastify'; // Assuming toastify is globally available if used
 
 // Basic Modal Component (can be extracted or use a library)
 const Modal = ({ children, isOpen, onClose, title }) => {
@@ -46,7 +46,7 @@ const TemplatesPage = () => {
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || 'Failed to fetch templates.';
       setError(errorMsg);
-      // toast.error(errorMsg);
+      toast.error(errorMsg);
       console.error("Fetch templates error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -77,20 +77,20 @@ const TemplatesPage = () => {
     try {
       if (editingTemplate && editingTemplate._id) {
         await api.updateTemplate(editingTemplate._id, templateData);
-        // toast.success('Template updated successfully!');
-        alert('Template updated successfully!');
+        toast.success('Template updated successfully!');
+        // alert('Template updated successfully!');
       } else {
         await api.createTemplate(templateData);
-        // toast.success('Template created successfully!');
-        alert('Template created successfully!');
+        toast.success('Template created successfully!');
+        // alert('Template created successfully!');
       }
       handleCloseModal();
       fetchTemplates();
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || (editingTemplate ? 'Failed to update template.' : 'Failed to create template.');
       setError(errorMsg);
-      // toast.error(errorMsg);
-      alert(errorMsg); // Fallback alert
+      toast.error(errorMsg);
+      // alert(errorMsg); // Fallback alert
       console.error("Submit template error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -101,14 +101,14 @@ const TemplatesPage = () => {
     if (window.confirm('Are you sure you want to delete this template?')) {
       try {
         await api.deleteTemplate(templateId);
-        // toast.success('Template deleted successfully!');
-        alert('Template deleted successfully!');
+        toast.success('Template deleted successfully!');
+        // alert('Template deleted successfully!');
         fetchTemplates();
       } catch (err) {
         const errorMsg = err.response?.data?.message || err.message || 'Failed to delete template.';
         setError(errorMsg);
-        // toast.error(errorMsg);
-        alert(errorMsg);
+        toast.error(errorMsg);
+        // alert(errorMsg);
         console.error("Delete template error:", errorMsg);
       }
     }
@@ -120,7 +120,8 @@ const TemplatesPage = () => {
     // and pass template.structure or template.title as initial data.
     // e.g., navigate('/productive/notes/new', { state: { templateData: template.structure } });
     // For 'custom' type, it might open a new document based on this template.
-    alert(`'Use Template' clicked for "${template.title}". Structure: ${JSON.stringify(template.structure, null, 2)}`);
+    toast.info(`'Use Template' clicked for "${template.title}". Structure: ${JSON.stringify(template.structure, null, 2)}`);
+    // alert(`'Use Template' clicked for "${template.title}". Structure: ${JSON.stringify(template.structure, null, 2)}`);
     // Actual implementation of "Use Template" will require further planning and integration.
   };
 

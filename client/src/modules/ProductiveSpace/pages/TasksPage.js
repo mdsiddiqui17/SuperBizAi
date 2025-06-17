@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as api from '../services/productiveSpaceApi'; // Assuming API service is here
 import TaskForm from '../components/TaskForm'; // Assuming TaskForm is in components
-// import { toast } from 'react-toastify'; // If you have toastify setup
+import { toast } from 'react-toastify'; // If you have toastify setup
 
 // Basic Modal Component (can be extracted to its own file later)
 const Modal = ({ children, isOpen, onClose, title }) => {
@@ -50,7 +50,7 @@ const TasksPage = () => {
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || 'Failed to fetch tasks.';
       setError(errorMsg);
-      // toast.error(errorMsg);
+      toast.error(errorMsg);
       console.error("Fetch tasks error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -81,20 +81,20 @@ const TasksPage = () => {
     try {
       if (editingTask && editingTask._id) {
         await api.updateTask(editingTask._id, taskData);
-        // toast.success('Task updated successfully!');
-        alert('Task updated successfully!');
+        toast.success('Task updated successfully!');
+        // alert('Task updated successfully!');
       } else {
         await api.createTask(taskData);
-        // toast.success('Task created successfully!');
-        alert('Task created successfully!');
+        toast.success('Task created successfully!');
+        // alert('Task created successfully!');
       }
       handleCloseModal();
       fetchTasks(); // Refetch tasks after create/update
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || (editingTask ? 'Failed to update task.' : 'Failed to create task.');
       setError(errorMsg); // Show error related to form submission
-      // toast.error(errorMsg);
-      alert(errorMsg); // Fallback alert
+      toast.error(errorMsg);
+      // alert(errorMsg); // Fallback alert
       console.error("Submit task error:", errorMsg);
     } finally {
       setIsLoading(false); // Reset general loading state
@@ -105,14 +105,14 @@ const TasksPage = () => {
     if (window.confirm('Are you sure you want to delete this task?')) {
       try {
         await api.deleteTask(taskId);
-        // toast.success('Task deleted successfully!');
-        alert('Task deleted successfully!');
+        toast.success('Task deleted successfully!');
+        // alert('Task deleted successfully!');
         fetchTasks(); // Refetch tasks
       } catch (err) {
         const errorMsg = err.response?.data?.message || err.message || 'Failed to delete task.';
         setError(errorMsg);
-        // toast.error(errorMsg);
-        alert(errorMsg);
+        toast.error(errorMsg);
+        // alert(errorMsg);
         console.error("Delete task error:", errorMsg);
       }
     }

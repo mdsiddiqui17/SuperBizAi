@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import * as api from '../services/productiveSpaceApi';
 import WorkspaceLinkForm from '../components/WorkspaceLinkForm';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Modal = ({ children, isOpen, onClose, title }) => {
   if (!isOpen) return null;
@@ -45,7 +45,7 @@ const WorkspaceLinksPage = () => {
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || 'Failed to fetch workspace links.';
       setError(errorMsg);
-      // toast.error(errorMsg);
+      toast.error(errorMsg);
       console.error("Fetch links error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -76,20 +76,20 @@ const WorkspaceLinksPage = () => {
     try {
       if (editingLink && editingLink._id) {
         await api.updateWorkspaceLink(editingLink._id, linkData);
-        // toast.success('Link updated successfully!');
-        alert('Link updated successfully!');
+        toast.success('Link updated successfully!');
+        // alert('Link updated successfully!');
       } else {
         await api.createWorkspaceLink(linkData);
-        // toast.success('Link created successfully!');
-        alert('Link created successfully!');
+        toast.success('Link created successfully!');
+        // alert('Link created successfully!');
       }
       handleCloseModal();
       fetchLinks();
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || (editingLink ? 'Failed to update link.' : 'Failed to create link.');
       setError(errorMsg);
-      // toast.error(errorMsg);
-      alert(errorMsg);
+      toast.error(errorMsg);
+      // alert(errorMsg);
       console.error("Submit link error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -100,14 +100,14 @@ const WorkspaceLinksPage = () => {
     if (window.confirm('Are you sure you want to delete this link?')) {
       try {
         await api.deleteWorkspaceLink(linkId);
-        // toast.success('Link deleted successfully!');
-        alert('Link deleted successfully!');
+        toast.success('Link deleted successfully!');
+        // alert('Link deleted successfully!');
         fetchLinks();
       } catch (err) {
         const errorMsg = err.response?.data?.message || err.message || 'Failed to delete link.';
         setError(errorMsg);
-        // toast.error(errorMsg);
-        alert(errorMsg);
+        toast.error(errorMsg);
+        // alert(errorMsg);
         console.error("Delete link error:", errorMsg);
       }
     }

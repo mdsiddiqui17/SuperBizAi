@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as api from '../services/productiveSpaceApi';
 import ContactForm from '../components/ContactForm';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Modal = ({ children, isOpen, onClose, title }) => {
   if (!isOpen) return null;
@@ -48,7 +48,7 @@ const ContactsPage = () => {
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || 'Failed to fetch contacts.';
       setError(errorMsg);
-      // toast.error(errorMsg);
+      toast.error(errorMsg);
       console.error("Fetch contacts error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -79,20 +79,20 @@ const ContactsPage = () => {
     try {
       if (editingContact && editingContact._id) {
         await api.updateContact(editingContact._id, contactData);
-        // toast.success('Contact updated successfully!');
-        alert('Contact updated successfully!');
+        toast.success('Contact updated successfully!');
+        // alert('Contact updated successfully!');
       } else {
         await api.createContact(contactData);
-        // toast.success('Contact created successfully!');
-        alert('Contact created successfully!');
+        toast.success('Contact created successfully!');
+        // alert('Contact created successfully!');
       }
       handleCloseModal();
       fetchContacts();
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || (editingContact ? 'Failed to update contact.' : 'Failed to create contact.');
       setError(errorMsg);
-      // toast.error(errorMsg);
-      alert(errorMsg);
+      toast.error(errorMsg);
+      // alert(errorMsg);
       console.error("Submit contact error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -103,14 +103,14 @@ const ContactsPage = () => {
     if (window.confirm('Are you sure you want to delete this contact?')) {
       try {
         await api.deleteContact(contactId);
-        // toast.success('Contact deleted successfully!');
-        alert('Contact deleted successfully!');
+        toast.success('Contact deleted successfully!');
+        // alert('Contact deleted successfully!');
         fetchContacts();
       } catch (err) {
         const errorMsg = err.response?.data?.message || err.message || 'Failed to delete contact.';
         setError(errorMsg);
-        // toast.error(errorMsg);
-        alert(errorMsg);
+        toast.error(errorMsg);
+        // alert(errorMsg);
         console.error("Delete contact error:", errorMsg);
       }
     }

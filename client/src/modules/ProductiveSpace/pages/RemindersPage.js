@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import * as api from '../services/productiveSpaceApi';
 import ReminderForm from '../components/ReminderForm';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Modal = ({ children, isOpen, onClose, title }) => {
   if (!isOpen) return null;
@@ -47,7 +47,7 @@ const RemindersPage = () => {
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || 'Failed to fetch reminders.';
       setError(errorMsg);
-      // toast.error(errorMsg);
+      toast.error(errorMsg);
       console.error("Fetch reminders error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -78,20 +78,20 @@ const RemindersPage = () => {
     try {
       if (editingReminder && editingReminder._id) {
         await api.updateReminder(editingReminder._id, reminderData);
-        // toast.success('Reminder updated successfully!');
-        alert('Reminder updated successfully!');
+        toast.success('Reminder updated successfully!');
+        // alert('Reminder updated successfully!');
       } else {
         await api.createReminder(reminderData);
-        // toast.success('Reminder created successfully!');
-        alert('Reminder created successfully!');
+        toast.success('Reminder created successfully!');
+        // alert('Reminder created successfully!');
       }
       handleCloseModal();
       fetchReminders();
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || (editingReminder ? 'Failed to update reminder.' : 'Failed to create reminder.');
       setError(errorMsg);
-      // toast.error(errorMsg);
-      alert(errorMsg);
+      toast.error(errorMsg);
+      // alert(errorMsg);
       console.error("Submit reminder error:", errorMsg);
     } finally {
       setIsLoading(false);
@@ -102,14 +102,14 @@ const RemindersPage = () => {
     if (window.confirm('Are you sure you want to delete this reminder?')) {
       try {
         await api.deleteReminder(reminderId);
-        // toast.success('Reminder deleted successfully!');
-        alert('Reminder deleted successfully!');
+        toast.success('Reminder deleted successfully!');
+        // alert('Reminder deleted successfully!');
         fetchReminders();
       } catch (err) {
         const errorMsg = err.response?.data?.message || err.message || 'Failed to delete reminder.';
         setError(errorMsg);
-        // toast.error(errorMsg);
-        alert(errorMsg);
+        toast.error(errorMsg);
+        // alert(errorMsg);
         console.error("Delete reminder error:", errorMsg);
       }
     }
