@@ -1,0 +1,91 @@
+/* client/src/modules/ProductiveSpace/templateBuilder/styles/templateBuilder.css */
+
+.template-editor {
+  background-color: #f9f9f9; /* Light background for the editor area */
+  border: 1px solid #ddd;
+  border-radius: 0.375rem; /* Bootstrap's default border-radius */
+  padding: 1rem;
+}
+
+.template-block {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  padding-top: 2.5rem; /* Extra padding at the top for action buttons */
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.template-block:hover {
+  border-color: #ccc;
+}
+
+.template-block-actions {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.3rem;
+  opacity: 0.6; /* Slightly transparent until hovered */
+  transition: opacity 0.2s ease-in-out;
+}
+
+.template-block:hover .template-block-actions {
+  opacity: 1; /* Fully visible on block hover */
+}
+
+.template-block-actions .btn {
+  padding: 0.2rem 0.4rem; /* Smaller padding for action buttons */
+  font-size: 0.8rem;
+}
+
+.template-block-actions .btn-danger {
+    color: #dc3545;
+    background-color: transparent;
+    border-color: transparent;
+}
+.template-block-actions .btn-danger:hover {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.template-block-actions .btn-light {
+    color: #6c757d;
+    background-color: transparent;
+    border-color: transparent;
+}
+.template-block-actions .btn-light:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+
+/* Specific block type styling adjustments if needed */
+.template-block .form-select-sm {
+  max-width: 80px; /* For H1/H2 selector */
+}
+
+.template-block textarea.form-control {
+  min-height: 80px;
+}
+
+.template-block hr {
+    margin: 1rem 0; /* Consistent margin for visual dividers within preview/render */
+    border-top: 1px dashed #ccc;
+}
+
+.add-block-controls {
+  background-color: #f0f0f0;
+  padding: 0.75rem;
+  border-top: 1px solid #ddd;
+  border-bottom-left-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  margin: 0 -1rem -1rem -1rem; /* Extend to container padding */
+}
+
+.template-builder-page .form-label {
+    font-weight: 500; /* Slightly bolder labels on the page */
+}
