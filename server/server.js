@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -18,7 +17,8 @@ const contentRoutes = require('./routes/contentRoutes');
 const imageRoutes = require('./routes/imageRoutes');
 const schedulerRoutes = require('./routes/schedulerRoutes');
 const adRoutes = require('./routes/adRoutes');
-const productRoutes = require('./routes/productRoutes'); // ✅ Smart Products
+const productRoutes = require('./routes/productRoutes');
+const analyticsRoutes = require('./routes/analytics'); // ✅ NEW: Analytics route
 
 const app = express();
 
@@ -46,6 +46,7 @@ app.use('/api/ads', adRoutes);
 app.use('/api/images', imageRoutes);
 app.use('/api/scheduler', schedulerRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/analytics', analyticsRoutes); // ✅ Mount Analytics route
 app.use('/api', protectedRoutes);
 
 app.get('/', (req, res) => {

@@ -12,10 +12,29 @@ import ContentSetup from './pages/ContentSetup';
 import GenerateContent from './pages/GenerateContent';
 import AdCreator from './pages/AdCreator';
 import Scheduler from './pages/Scheduler';
-import ProductsPage from './pages/ProductsPage'; // ✅ NEW
+import ProductsPage from './pages/ProductsPage';
 import NotFound from './pages/NotFound';
 
+// ✅ Productive Space Module Imports
+import ProductiveSpaceLayout from './modules/ProductiveSpace/ProductiveSpaceLayout';
+import TasksPage from './modules/ProductiveSpace/pages/TasksPage';
+import NotesPage from './modules/ProductiveSpace/pages/NotesPage';
+import RemindersPage from './modules/ProductiveSpace/pages/RemindersPage';
+import ContactsPage from './modules/ProductiveSpace/pages/ContactsPage';
+import WorkspaceLinksPage from './modules/ProductiveSpace/pages/WorkspaceLinksPage';
+import TemplatesPage from './modules/ProductiveSpace/pages/TemplatesPage';
+import TemplateBuilderPage from './modules/ProductiveSpace/templateBuilder/pages/TemplateBuilderPage';
+
+// ✅ Analytics Module Import
+import AnalyticsPage from './modules/Analytics/pages/AnalyticsPage';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+
+function ProtectedRoute({ children, isLoggedIn }) {
+  return isLoggedIn ? children : <Navigate to="/login" />;
+}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,58 +47,41 @@ function App() {
   }, []);
 
   if (authLoading) {
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading application...</div>;
+    return <div className="d-flex justify-content-center align-items-center vh-100">Loading application...</div>;
   }
 
   return (
     <Router>
       <Header isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
+      <ToastContainer position="top-right" autoClose={3000} pauseOnHover theme="colored" />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login setIsLoggedIn={setIsLoggedIn} />}
-        />
-        <Route
-          path="/register"
-          element={isLoggedIn ? <Navigate to="/dashboard" /> : <Register />}
-        />
-        <Route
-          path="/dashboard"
-          element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/leads"
-          element={isLoggedIn ? <Leads /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/appointments"
-          element={isLoggedIn ? <Appointments /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/content-setup"
-          element={isLoggedIn ? <ContentSetup /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/generate-content"
-          element={isLoggedIn ? <GenerateContent /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/create-ad"
-          element={isLoggedIn ? <AdCreator /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/scheduler"
-          element={isLoggedIn ? <Scheduler /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/products"
-          element={isLoggedIn ? <ProductsPage /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/account"
-          element={isLoggedIn ? <div className="container"><h1>Account Settings</h1></div> : <Navigate to="/login" />}
-        />
+        <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/dashboard" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard /></ProtectedRoute>} />
+        <Route path="/leads" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Leads /></ProtectedRoute>} />
+        <Route path="/appointments" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Appointments /></ProtectedRoute>} />
+        <Route path="/content-setup" element={<ProtectedRoute isLoggedIn={isLoggedIn}><ContentSetup /></ProtectedRoute>} />
+        <Route path="/generate-content" element={<ProtectedRoute isLoggedIn={isLoggedIn}><GenerateContent /></ProtectedRoute>} />
+        <Route path="/create-ad" element={<ProtectedRoute isLoggedIn={isLoggedIn}><AdCreator /></ProtectedRoute>} />
+        <Route path="/scheduler" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Scheduler /></ProtectedRoute>} />
+        <Route path="/products" element={<ProtectedRoute isLoggedIn={isLoggedIn}><ProductsPage /></ProtectedRoute>} />
+        <Route path="/account" element={<ProtectedRoute isLoggedIn={isLoggedIn}><div className="container"><h1>Account Settings</h1></div></ProtectedRoute>} />
+
+        {/* ✅ Protected Productive Space Routes */}
+        <Route path="/productive" element={<ProtectedRoute isLoggedIn={isLoggedIn}><ProductiveSpaceLayout /></ProtectedRoute>}>
+          <Route path="tasks" element={<TasksPage />} />
+          <Route path="notes" element={<NotesPage />} />
+          <Route path="reminders" element={<RemindersPage />} />
+          <Route path="contacts" element={<ContactsPage />} />
+          <Route path="links" element={<WorkspaceLinksPage />} />
+          <Route path="templates" element={<TemplatesPage />} />
+          <Route path="templates/builder/:templateId" element={<TemplateBuilderPage />} />
+        </Route>
+
+        {/* ✅ Analytics Route */}
+        <Route path="/analytics" element={<ProtectedRoute isLoggedIn={isLoggedIn}><AnalyticsPage /></ProtectedRoute>} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

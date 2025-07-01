@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SmartProductForm from '../components/SmartProductForm';
@@ -28,20 +27,16 @@ const ProductsPage = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
-    setError(null); // Clear previous errors specific to delete if any, or general page errors.
-    // setLoading(true); // Optional: if delete itself is long and doesn't immediately refetch.
-                     // fetchProducts will set its own loading state for the refresh.
+    setError(null);
     try {
       const token = localStorage.getItem('token');
       await axios.delete(`/api/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      fetchProducts(); // This will handle its own loading/error states for the product list refresh
+      fetchProducts();
     } catch (err) {
       console.error('Error deleting product:', err);
-      // alert('Failed to delete product.'); // Replaced by setError
       setError('Failed to delete product. Please try again.');
-      // setLoading(false); // Only if we set it true for the delete operation itself.
     }
   };
 
@@ -60,7 +55,8 @@ const ProductsPage = () => {
         {!loading && !error && products.length === 0 && (
           <p>No products yet. Add one above.</p>
         )}
-        {!loading && !error && products.map((product) => (
+        {!loading && !error &&
+          products.map((product) => (
             <div className="col-md-4 mb-4" key={product._id}>
               <div className="card h-100 shadow-sm">
                 {product.imageUrl && (
@@ -88,7 +84,7 @@ const ProductsPage = () => {
               </div>
             </div>
           ))
-        )}
+        }
       </div>
     </div>
   );

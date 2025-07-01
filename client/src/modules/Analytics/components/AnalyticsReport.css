@@ -1,0 +1,16 @@
+.analytics-report {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.analytics-report h5 {
+  margin-top: 10px;
+  color: #444;
+}
+
+.analytics-report p {
+  margin-bottom: 10px;
+  color: #555;
+}
