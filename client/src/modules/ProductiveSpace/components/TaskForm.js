@@ -1,5 +1,6 @@
 // client/src/modules/ProductiveSpace/components/TaskForm.js
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const TaskForm = ({ onSubmit, onCancel, initialTaskData, isEditMode }) => {
   const [task, setTask] = useState({
@@ -33,7 +34,7 @@ const TaskForm = ({ onSubmit, onCancel, initialTaskData, isEditMode }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!task.title.trim()) {
-      alert('Title is required.'); // Basic validation
+      toast.error('Title is required.'); // New line
       return;
     }
     const taskDataToSubmit = { ...task };

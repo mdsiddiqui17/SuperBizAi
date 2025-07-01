@@ -1,5 +1,6 @@
 // client/src/modules/ProductiveSpace/components/WorkspaceLinkForm.js
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const WorkspaceLinkForm = ({ onSubmit, onCancel, initialLinkData, isEditMode }) => {
   const [link, setLink] = useState({
@@ -30,14 +31,14 @@ const WorkspaceLinkForm = ({ onSubmit, onCancel, initialLinkData, isEditMode }) 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!link.name.trim() || !link.url.trim()) {
-      alert('Name and URL are required.');
+      toast.error('Name and URL are required.');
       return;
     }
     // Basic URL validation (optional, as schema also has it)
     try {
         new URL(link.url); // Check if URL is constructible
     } catch (_) {
-        alert('Please enter a valid URL (e.g., https://example.com)');
+        toast.error('Please enter a valid URL (e.g., https://example.com)');
         return;
     }
     onSubmit(link);

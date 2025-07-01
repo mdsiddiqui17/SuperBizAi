@@ -1,5 +1,6 @@
 // client/src/modules/ProductiveSpace/components/ReminderForm.js
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const ReminderForm = ({ onSubmit, onCancel, initialReminderData, isEditMode }) => {
   const [reminder, setReminder] = useState({
@@ -49,11 +50,11 @@ const ReminderForm = ({ onSubmit, onCancel, initialReminderData, isEditMode }) =
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!reminder.message.trim()) {
-      alert('Message is required.');
+      toast.error('Message is required.');
       return;
     }
     if (!reminder.remindAt) {
-      alert('Reminder date and time are required.');
+      toast.error('Reminder date and time are required.');
       return;
     }
     // Convert local datetime string back to a Date object or ISO string for backend

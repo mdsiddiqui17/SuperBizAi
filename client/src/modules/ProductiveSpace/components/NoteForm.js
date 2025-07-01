@@ -1,5 +1,6 @@
 // client/src/modules/ProductiveSpace/components/NoteForm.js
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const NoteForm = ({ onSubmit, onCancel, initialNoteData, isEditMode }) => {
   const [note, setNote] = useState({
@@ -28,7 +29,7 @@ const NoteForm = ({ onSubmit, onCancel, initialNoteData, isEditMode }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!note.title.trim()) {
-      alert('Title is required.');
+      toast.error('Title is required.');
       return;
     }
     // Convert comma-separated tags string to an array of trimmed strings

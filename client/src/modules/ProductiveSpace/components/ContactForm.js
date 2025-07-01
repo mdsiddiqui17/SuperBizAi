@@ -1,5 +1,6 @@
 // client/src/modules/ProductiveSpace/components/ContactForm.js
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 const ContactForm = ({ onSubmit, onCancel, initialContactData, isEditMode }) => {
   const [contact, setContact] = useState({
@@ -34,12 +35,12 @@ const ContactForm = ({ onSubmit, onCancel, initialContactData, isEditMode }) => 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!contact.name.trim()) {
-      alert('Name is required.');
+      toast.error('Name is required.');
       return;
     }
     // Basic email validation (optional, as schema also has it)
     if (contact.email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(contact.email)) {
-        alert('Please enter a valid email address.');
+        toast.error('Please enter a valid email address.');
         return;
     }
     const tagsArray = contact.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
