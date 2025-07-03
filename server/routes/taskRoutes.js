@@ -6,13 +6,14 @@ const {
   getTaskById,
   updateTask,
   deleteTask
-} = require('../controllers/taskController'); // Adjust path if controller is elsewhere
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path to your authMiddleware
+} = require('../controllers/taskController');
 
-// All routes in this file will be protected by authMiddleware
-router.use(authMiddleware);
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Correct import
 
-// Define CRUD routes
+// Protect all task routes
+router.use(verifyToken);
+
+// Task CRUD routes
 router.route('/')
   .post(createTask)
   .get(getUserTasks);

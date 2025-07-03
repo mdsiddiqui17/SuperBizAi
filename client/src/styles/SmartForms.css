@@ -1,0 +1,17 @@
+.smart-forms-page {
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.public-form-page {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.public-form-thankyou {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: green;
+}

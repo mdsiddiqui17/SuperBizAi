@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { generateImage } = require('../controllers/imageController');
-const authMiddleware = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Correct import
 
-router.post('/generate-image', authMiddleware, generateImage);
+router.post('/generate-image', verifyToken, generateImage); // ✅ Now works as a middleware
 
 module.exports = router;

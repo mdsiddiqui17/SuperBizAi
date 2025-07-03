@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import Topbar from '../components/Topbar';
 import DashboardCard from '../components/DashboardCard';
 import '../styles/Dashboard.css';
 
@@ -11,7 +9,7 @@ export default function Dashboard() {
   const [productCount, setProductCount] = useState(0);
 
   const handleCardClick = (path) => {
-    navigate(path); // 🔥 Keep this simple
+    navigate(path);
   };
 
   useEffect(() => {
@@ -47,52 +45,18 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="dashboard-layout">
-      <Sidebar />
-      <div className="dashboard-content">
-        <Topbar />
-        <div className="cards">
-          <DashboardCard
-            title="CRM Leads"
-            value="24"
-            onClick={() => handleCardClick('/leads')}
-          />
-          <DashboardCard
-            title="Appointments"
-            value="8"
-            onClick={() => handleCardClick('/appointments')}
-          />
-          <DashboardCard
-            title="Smart Products"
-            value={productCount}
-            onClick={() => handleCardClick('/products')}
-          />
-          <DashboardCard
-            title="Content Engine"
-            value="AI"
-            onClick={() => handleCardClick('/content-setup')}
-          />
-          <DashboardCard
-            title="Content Generator"
-            value="New"
-            onClick={() => handleCardClick('/generate-content')}
-          />
-          <DashboardCard
-            title="Scheduled Posts"
-            value={scheduledCount}
-            onClick={() => handleCardClick('/scheduler')}
-          />
-          <DashboardCard
-            title="Productive Space"
-            value="Workspace"
-            onClick={() => handleCardClick('/productive/tasks')}
-          />
-          <DashboardCard
-            title="Analytics"
-            value="Insights"
-            onClick={() => handleCardClick('/analytics')}
-          />
-        </div>
+    <div className="dashboard-content">
+      <h2 className="dashboard-heading">Welcome to your Dashboard</h2>
+      <div className="cards">
+        <DashboardCard title="CRM Leads" value="24" onClick={() => handleCardClick('/leads')} />
+        <DashboardCard title="Appointments" value="8" onClick={() => handleCardClick('/appointments')} />
+        <DashboardCard title="Smart Products" value={productCount} onClick={() => handleCardClick('/products')} />
+        <DashboardCard title="Content Generator" value="New" onClick={() => handleCardClick('/generate-content')} />
+        <DashboardCard title="Scheduled Posts" value={scheduledCount} onClick={() => handleCardClick('/scheduler')} />
+        <DashboardCard title="Smart Forms" value="Forms" onClick={() => handleCardClick('/smart-forms')} />
+        <DashboardCard title="Productive Space" value="Workspace" onClick={() => handleCardClick('/productive/tasks')} />
+        <DashboardCard title="Analytics" value="Insights" onClick={() => handleCardClick('/analytics')} />
+        <DashboardCard title="Competitor Analysis" value="SEO + Report" onClick={() => handleCardClick('/competitor-analysis')} />
       </div>
     </div>
   );

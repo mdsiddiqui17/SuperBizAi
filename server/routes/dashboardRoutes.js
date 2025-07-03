@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Destructure correctly
 
-router.get('/', auth, (req, res) => {
+router.get('/', verifyToken, (req, res) => {
   res.json({ message: `Welcome to your dashboard, user: ${req.user.userId}` });
 });
 

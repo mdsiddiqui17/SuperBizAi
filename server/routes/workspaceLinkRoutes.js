@@ -6,13 +6,14 @@ const {
   getWorkspaceLinkById,
   updateWorkspaceLink,
   deleteWorkspaceLink
-} = require('../controllers/workspaceLinkController'); // Adjust path if controller is elsewhere
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path to your authMiddleware
+} = require('../controllers/workspaceLinkController');
 
-// All routes in this file will be protected by authMiddleware
-router.use(authMiddleware);
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Fixed import
 
-// Define CRUD routes for workspace links
+// Apply auth middleware to all routes
+router.use(verifyToken);
+
+// Workspace Link CRUD routes
 router.route('/')
   .post(createWorkspaceLink)
   .get(getUserWorkspaceLinks);

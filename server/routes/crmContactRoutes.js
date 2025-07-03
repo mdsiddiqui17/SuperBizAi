@@ -6,13 +6,14 @@ const {
   getCRMContactById,
   updateCRMContact,
   deleteCRMContact
-} = require('../controllers/crmContactController'); // Adjust path if controller is elsewhere
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path to your authMiddleware
+} = require('../controllers/crmContactController');
 
-// All routes in this file will be protected by authMiddleware
-router.use(authMiddleware);
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Corrected
 
-// Define CRUD routes for CRM contacts
+// Apply verifyToken middleware to all routes
+router.use(verifyToken);
+
+// CRM Contact CRUD routes
 router.route('/')
   .post(createCRMContact)
   .get(getUserCRMContacts);

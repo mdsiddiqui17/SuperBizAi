@@ -6,13 +6,14 @@ const {
   getReminderById,
   updateReminder,
   deleteReminder
-} = require('../controllers/reminderController'); // Adjust path if controller is elsewhere
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path to your authMiddleware
+} = require('../controllers/reminderController');
 
-// All routes in this file will be protected by authMiddleware
-router.use(authMiddleware);
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Destructure properly
 
-// Define CRUD routes for reminders
+// Apply verifyToken middleware to all routes
+router.use(verifyToken);
+
+// Reminder CRUD routes
 router.route('/')
   .post(createReminder)
   .get(getUserReminders);

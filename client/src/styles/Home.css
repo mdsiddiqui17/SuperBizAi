@@ -1,30 +1,61 @@
-
 .home-page {
   background-color: #f9f9f9;
 }
 
-.hero-section .hero-text h1 {
-  font-size: 2.5rem;
+/* HERO */
+.hero-section {
+  min-height: 100vh;
+  padding: 60px 0;
+}
+.hero-heading {
+  font-size: 2.8rem;
   font-weight: bold;
 }
-
-.hero-section .hero-image .image-placeholder,
-.feature-image .image-placeholder {
-  width: 100%;
-  height: 250px;
-  background-color: #dee2e6;
-  border-radius: 8px;
+.hero-subtext {
+  font-size: 1.1rem;
+}
+.start-btn {
+  background-color: #f25f5c;
+  color: white;
+  padding: 10px 20px;
+  font-weight: 500;
+  border: none;
+}
+.start-btn:hover {
+  background-color: #d94441;
+}
+.modules-list .module-box {
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 10px;
 }
 
-.features-section ul {
-  list-style: none;
-  padding-left: 0;
+/* ABOUT */
+.about-banner-section {
+  background-color: #1d2d44;
+}
+.about-banner-section ul {
+  padding-left: 20px;
 }
 
-.features-section ul li {
-  margin-bottom: 0.75rem;
+/* PRICING */
+.pricing-section h3 {
+  color: #1d2d44;
+}
+.pricing-section ul {
+  padding-left: 20px;
 }
 
+/* FAQ */
+.faq-section h3 {
+  color: #1d2d44;
+}
 .accordion-button:focus {
   box-shadow: none;
+}
+
+/* CONTACT */
+.contact-section input,
+.contact-section textarea {
+  background-color: #fff;
 }

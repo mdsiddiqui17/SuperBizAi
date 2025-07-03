@@ -1,11 +1,11 @@
 const express = require('express');
 const Lead = require('../models/Lead');
-const authMiddleware = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Corrected
 
 const router = express.Router();
 
 // Get all leads for the logged-in user
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
   try {
     const leads = await Lead.find({ userId: req.user.userId });
     res.json(leads);
@@ -16,9 +16,9 @@ router.get('/', authMiddleware, async (req, res) => {
 });
 
 // Create a new lead
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   try {
-    const newLead = new Lead({ ...req.body, userId: req.user.userId }); // ✅ fix here
+    const newLead = new Lead({ ...req.body, userId: req.user.userId });
     await newLead.save();
     res.status(201).json(newLead);
   } catch (err) {
@@ -28,10 +28,10 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // Update a lead by ID
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', verifyToken, async (req, res) => {
   try {
     const updatedLead = await Lead.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user.userId }, // ✅ fix here
+      { _id: req.params.id, userId: req.user.userId },
       req.body,
       { new: true }
     );
@@ -44,9 +44,9 @@ router.put('/:id', authMiddleware, async (req, res) => {
 });
 
 // Delete a lead by ID
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', verifyToken, async (req, res) => {
   try {
-    const deletedLead = await Lead.findOneAndDelete({ _id: req.params.id, userId: req.user.userId }); // ✅ fix here
+    const deletedLead = await Lead.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
     if (!deletedLead) return res.status(404).json({ message: 'Lead not found' });
     res.json({ message: 'Lead deleted' });
   } catch (err) {

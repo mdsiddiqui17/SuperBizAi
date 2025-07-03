@@ -1,7 +1,6 @@
-
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Fixed import
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
@@ -11,8 +10,8 @@ const {
   deleteProduct
 } = require('../controllers/productController');
 
-router.post('/', authMiddleware, upload.single('image'), createProduct);
-router.get('/', authMiddleware, getProducts);
-router.delete('/:id', authMiddleware, deleteProduct);
+router.post('/', verifyToken, upload.single('image'), createProduct);
+router.get('/', verifyToken, getProducts);
+router.delete('/:id', verifyToken, deleteProduct);
 
 module.exports = router;

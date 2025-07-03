@@ -6,13 +6,14 @@ const {
   getTemplateById,
   updateTemplate,
   deleteTemplate
-} = require('../controllers/templateController'); // Adjust path if controller is elsewhere
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path to your authMiddleware
+} = require('../controllers/templateController');
 
-// All routes in this file will be protected by authMiddleware
-router.use(authMiddleware);
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Corrected import
 
-// Define CRUD routes for templates
+// Protect all template routes
+router.use(verifyToken);
+
+// Template CRUD routes
 router.route('/')
   .post(createTemplate)
   .get(getUserTemplates);

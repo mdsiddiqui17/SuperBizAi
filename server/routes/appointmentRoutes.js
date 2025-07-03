@@ -2,18 +2,21 @@ const express = require('express');
 const router = express.Router();
 const { google } = require('googleapis');
 const Appointment = require('../models/Appointment');
-const authMiddleware = require('../middleware/authMiddleware');
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ FIXED
 
-router.get('/', authMiddleware, async (req, res) => {
+// Get all appointments for the user
+router.get('/', verifyToken, async (req, res) => {
   const appointments = await Appointment.find({ user: req.user.userId });
   res.json(appointments);
 });
 
-router.post('/', authMiddleware, async (req, res) => {
+// Create a new appointment
+router.post('/', verifyToken, async (req, res) => {
   try {
     const newAppointment = new Appointment({ ...req.body, user: req.user.userId });
     await newAppointment.save();
 
+    // Google Calendar Integration
     const gToken = req.headers['x-google-token'];
     if (gToken) {
       const oauth2Client = new google.auth.OAuth2();
@@ -27,7 +30,7 @@ router.post('/', authMiddleware, async (req, res) => {
           description: req.body.notes,
           start: { dateTime: new Date(req.body.date).toISOString() },
           end: { dateTime: new Date(new Date(req.body.date).getTime() + 30 * 60000).toISOString() },
-        }
+        },
       });
     }
 
@@ -38,7 +41,8 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-router.put('/:id', authMiddleware, async (req, res) => {
+// Update an appointment
+router.put('/:id', verifyToken, async (req, res) => {
   const updated = await Appointment.findOneAndUpdate(
     { _id: req.params.id, user: req.user.userId },
     req.body,
@@ -47,7 +51,8 @@ router.put('/:id', authMiddleware, async (req, res) => {
   res.json(updated);
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+// Delete an appointment
+router.delete('/:id', verifyToken, async (req, res) => {
   await Appointment.findOneAndDelete({ _id: req.params.id, user: req.user.userId });
   res.json({ message: 'Appointment deleted' });
 });

@@ -6,13 +6,14 @@ const {
   getNoteById,
   updateNote,
   deleteNote
-} = require('../controllers/noteController'); // Adjust path if controller is elsewhere
-const authMiddleware = require('../middleware/authMiddleware'); // Adjust path to your authMiddleware
+} = require('../controllers/noteController');
 
-// All routes in this file will be protected by authMiddleware
-router.use(authMiddleware);
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Corrected import
 
-// Define CRUD routes for notes
+// Protect all routes in this router with verifyToken middleware
+router.use(verifyToken); // ✅ Now this works
+
+// CRUD routes for notes
 router.route('/')
   .post(createNote)
   .get(getUserNotes);

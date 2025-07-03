@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/authMiddleware');
-const { generateAd, saveCustomAd, listAds, scheduleAd } = require('../controllers/adController');
+const { verifyToken } = require('../middleware/authMiddleware'); // ✅ Corrected
+const {
+  generateAd,
+  saveCustomAd,
+  listAds,
+  scheduleAd
+} = require('../controllers/adController');
 
-router.post('/generate', authMiddleware, generateAd);
-router.post('/save', authMiddleware, saveCustomAd);
-router.get('/list', authMiddleware, listAds);
-router.post('/schedule', authMiddleware, scheduleAd);
+router.post('/generate', verifyToken, generateAd);
+router.post('/save', verifyToken, saveCustomAd);
+router.get('/list', verifyToken, listAds);
+router.post('/schedule', verifyToken, scheduleAd);
 
 module.exports = router;
