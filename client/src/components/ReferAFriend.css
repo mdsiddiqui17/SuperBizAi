@@ -1,0 +1,59 @@
+.refer-tab-container {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.refer-tab-container h3 {
+  font-size: 1.8rem;
+  color: #1d2d44;
+  margin-bottom: 1rem;
+}
+
+.referral-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.referral-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.referral-box button {
+  background-color: #f25f5c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.referral-box button:hover {
+  background-color: #d64a48;
+}
+
+.referral-benefits {
+  margin-top: 1.5rem;
+}
+
+.referral-benefits h5 {
+  font-weight: bold;
+  color: #1d2d44;
+  margin-bottom: 0.5rem;
+}
+
+.referral-benefits ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.referral-benefits li {
+  margin: 8px 0;
+  font-size: 1rem;
+}

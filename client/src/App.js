@@ -15,6 +15,7 @@ import AdCreator from './pages/AdCreator';
 import Scheduler from './pages/Scheduler';
 import ProductsPage from './pages/ProductsPage';
 import NotFound from './pages/NotFound';
+import AccountSettings from './pages/AccountSettings'; // ✅ NEW
 
 // ✅ Productive Space Module Imports
 import ProductiveSpaceLayout from './modules/ProductiveSpace/ProductiveSpaceLayout';
@@ -155,9 +156,7 @@ function App() {
           path="/account"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <div className="container">
-                <h1>Account Settings</h1>
-              </div>
+              <AccountSettings /> {/* ✅ UPDATED */}
             </ProtectedRoute>
           }
         />

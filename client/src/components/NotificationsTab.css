@@ -1,0 +1,15 @@
+.notifications-tab {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  color: #000;
+}
+
+.notifications-tab h4 {
+  color: #1d2d44;
+  margin-bottom: 20px;
+}
+
+.form-check {
+  margin-bottom: 12px;
+}
