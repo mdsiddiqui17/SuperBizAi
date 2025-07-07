@@ -36,11 +36,7 @@ export default function OrdersTab() {
       const res = await axios.get('/api/content/profile', {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (Array.isArray(res.data.products)) {
-        setProducts(res.data.products);
-      } else {
-        console.error('🚫 No products found in response:', res.data);
-      }
+      setProducts(res.data.products || []);
     } catch (err) {
       console.error('❌ Error fetching business products:', err);
     }
@@ -57,7 +53,7 @@ export default function OrdersTab() {
   };
 
   const exportCSV = () => {
-    const headers = ['Order Number', Name, Email, Phone, Product, Unit Price, Quantity, Total];
+    const headers = ['Order Number', 'Name', 'Email', 'Phone', 'Product', 'Unit Price', 'Quantity', 'Total'];
     const rows = filtered.map(order => {
       const p = order.products[0];
       return [
@@ -71,7 +67,7 @@ export default function OrdersTab() {
         `$${(p?.unitPrice || 0) * (p?.quantity || 1)}`
       ];
     });
-    const content = [headers, ...rows].map(row => row.join(',')).join('\n');
+    const content = [headers, ...rows].map(e => e.join(',')).join('\n');
     const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -86,12 +82,15 @@ export default function OrdersTab() {
     e.preventDefault();
     const token = localStorage.getItem('token');
 
-    const selectedProduct = products.find(p => p.name === form.product);
+    const selected = products.find(p => p.name === form.product);
+    const unitPrice = selected?.price || 0;
+
     const productObj = {
       name: form.product,
-      unitPrice: selectedProduct?.price || parseFloat(form.unitPrice),
+      unitPrice,
       quantity: parseInt(form.quantity)
     };
+
     const total = productObj.unitPrice * productObj.quantity;
 
     const orderData = {
@@ -116,8 +115,15 @@ export default function OrdersTab() {
       resetForm();
       fetchOrders();
     } catch (err) {
-      console.error('❌ Error saving order:', err);
+      console.error('Error saving order:', err);
     }
+  };
+
+  const resetForm = () => {
+    setForm({ name: '', email: '', phone: '', product: '', unitPrice: '', quantity: 1 });
+    setShowModal(false);
+    setIsEditing(false);
+    setEditingId(null);
   };
 
   const handleEdit = (order) => {
@@ -152,13 +158,6 @@ export default function OrdersTab() {
   const handleProductSelect = (productName) => {
     const selected = products.find(p => p.name === productName);
     setForm({ ...form, product: productName, unitPrice: selected?.price || '' });
-  };
-
-  const resetForm = () => {
-    setForm({ name: '', email: '', phone: '', product: '', unitPrice: '', quantity: 1 });
-    setShowModal(false);
-    setIsEditing(false);
-    setEditingId(null);
   };
 
   return (
@@ -210,9 +209,7 @@ export default function OrdersTab() {
             <input placeholder="Phone" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
             <select value={form.product} onChange={e => handleProductSelect(e.target.value)} required>
               <option value="">Select Product</option>
-              {products.map((p, i) => (
-                <option key={i} value={p.name}>{p.name}</option>
-              ))}
+              {products.map((p, i) => <option key={i} value={p.name}>{p.name}</option>)}
             </select>
             <input type="number" placeholder="Quantity" min="1" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} />
             <input placeholder="Unit Price" value={form.unitPrice} readOnly />
