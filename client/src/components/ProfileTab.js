@@ -1,106 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import '../styles/ProfileTab.css';
 
 export default function ProfileTab() {
-  const [name, setName] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
-  const handlePasswordChange = async (e) => {
-    e.preventDefault();
-    setSuccess('');
-    setError('');
+  const [loading, setLoading] = useState(false);
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/;
-    if (!passwordRegex.test(newPassword)) {
-      return setError(
-        'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.'
-      );
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.name || '',
+        email: user.email || ''
+      }));
     }
+  }, []);
 
-    if (newPassword !== confirmPassword) {
-      return setError('New passwords do not match.');
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
+  const handleSave = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:5000/api/account/change-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          currentPassword,
-          newPassword,
-        }),
+      await axios.put('/api/account/profile', {
+        name: formData.name,
+        email: formData.email,
+        currentPassword: formData.currentPassword,
+        newPassword: formData.newPassword
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-      setSuccess('Password changed successfully.');
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
+      alert('Profile updated successfully');
     } catch (err) {
-      setError(err.message);
+      console.error(err);
+      alert('Error updating profile');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="profile-tab container py-4">
-      <h5>Update Profile</h5>
-      <div className="mb-3">
-        <label className="form-label">Full Name</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="John Doe"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-
-      <hr />
-
-      <h5 className="mt-4">Change Password</h5>
-      <form onSubmit={handlePasswordChange}>
-        <div className="mb-3">
-          <label className="form-label">Current Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">New Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Confirm New Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <div className="alert alert-danger mt-2">{error}</div>}
-        {success && <div className="alert alert-success mt-2">{success}</div>}
-        <button type="submit" className="btn btn-dark mt-2">Change Password</button>
-      </form>
+    <div className="profile-tab">
+      <h4>Profile Information</h4>
+      <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Full Name" />
+      <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" />
+      <input type="password" name="currentPassword" value={formData.currentPassword} onChange={handleChange} placeholder="Current Password" />
+      <input type="password" name="newPassword" value={formData.newPassword} onChange={handleChange} placeholder="New Password" />
+      <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm New Password" />
+      <button className="btn btn-success mt-3" onClick={handleSave} disabled={loading}>
+        {loading ? 'Saving...' : 'Save Changes'}
+      </button>
     </div>
   );
 }

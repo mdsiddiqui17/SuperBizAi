@@ -1,0 +1,36 @@
+.refer-tab-container {
+  padding: 20px;
+}
+
+.referral-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.referral-box input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.referral-box button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #3e5c76;
+  color: white;
+  border-radius: 4px;
+}
+
+.referral-benefits {
+  margin-top: 20px;
+}
+
+.referral-benefits ul {
+  padding-left: 20px;
+}
+
+.referral-benefits li {
+  margin-bottom: 8px;
+}

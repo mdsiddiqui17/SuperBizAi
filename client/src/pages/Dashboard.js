@@ -48,7 +48,7 @@ export default function Dashboard() {
     <div className="dashboard-content">
       <h2 className="dashboard-heading">Welcome to your Dashboard</h2>
       <div className="cards">
-        <DashboardCard title="CRM Leads" value="24" onClick={() => handleCardClick('/leads')} />
+        <DashboardCard title="Sales Leads/Orders" value="24" onClick={() => handleCardClick('/sales')} />
         <DashboardCard title="Appointments" value="8" onClick={() => handleCardClick('/appointments')} />
         <DashboardCard title="Smart Products" value={productCount} onClick={() => handleCardClick('/products')} />
         <DashboardCard title="Content Generator" value="New" onClick={() => handleCardClick('/generate-content')} />

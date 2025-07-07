@@ -7,7 +7,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
-import Leads from './pages/Leads';
+// import Leads from './pages/Leads'; // ❌ Replaced with Sales.js
+import Sales from './pages/Sales'; // ✅ NEW: Sales CRM Wrapper Page
 import Appointments from './pages/Appointments';
 import ContentSetup from './pages/ContentSetup';
 import GenerateContent from './pages/GenerateContent';
@@ -15,7 +16,7 @@ import AdCreator from './pages/AdCreator';
 import Scheduler from './pages/Scheduler';
 import ProductsPage from './pages/ProductsPage';
 import NotFound from './pages/NotFound';
-import AccountSettings from './pages/AccountSettings'; // ✅ NEW
+import AccountSettings from './pages/AccountSettings';
 
 // ✅ Productive Space Module Imports
 import ProductiveSpaceLayout from './modules/ProductiveSpace/ProductiveSpaceLayout';
@@ -97,10 +98,10 @@ function App() {
           }
         />
         <Route
-          path="/leads"
+          path="/sales"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Leads />
+              <Sales />
             </ProtectedRoute>
           }
         />
@@ -156,7 +157,7 @@ function App() {
           path="/account"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <AccountSettings /> {/* ✅ UPDATED */}
+              <AccountSettings />
             </ProtectedRoute>
           }
         />

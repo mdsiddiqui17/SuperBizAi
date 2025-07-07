@@ -1,0 +1,189 @@
+.sales-container {
+  padding: 30px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #ffffff; /* Changed to white */
+  min-height: 100vh;
+  color: #1d2d44; /* Default dark text */
+}
+
+/* Headings */
+.sales-container h1,
+.sales-container h2,
+.sales-container h3,
+.sales-container h4,
+.sales-container h5 {
+  color: #1d2d44; /* Dark blue headings */
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #ccc;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  color: #1d2d44;
+}
+
+.tabs button.active {
+  border-bottom: 3px solid #1d2d44;
+  font-weight: bold;
+  color: #1d2d44;
+}
+
+.tabs button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Controls */
+.sales-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.sales-controls input,
+.sales-controls select {
+  padding: 8px;
+  min-width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #1d2d44;
+}
+
+.sales-controls button {
+  padding: 8px 15px;
+  background-color: #3e5c76;
+  color: #ffffff; /* Button text white */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sales-controls button:hover {
+  background-color: #1d2d44;
+}
+
+.add-btn {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+.add-btn:hover {
+  background-color: #388e3c;
+}
+
+/* Table */
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  color: #1d2d44;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.sales-table th {
+  background-color: #e0e0e0;
+  color: #1d2d44;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  color: #1d2d44;
+}
+
+.modal-box h3 {
+  margin-bottom: 15px;
+  color: #1d2d44;
+}
+
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-box input,
+.modal-box select,
+.modal-box textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  color: #1d2d44;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.modal-actions button[type="submit"] {
+  background-color: #3e5c76;
+}
+
+.modal-actions button[type="button"] {
+  background-color: #1d2d44;
+}
+
+@media (max-width: 600px) {
+  .sales-controls {
+    flex-direction: column;
+  }
+
+  .modal-box {
+    width: 95%;
+  }
+
+  .sales-table th,
+  .sales-table td {
+    font-size: 14px;
+  }
+}

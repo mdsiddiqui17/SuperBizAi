@@ -16,7 +16,11 @@ const verifyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = {
+      ...decoded,
+      id: decoded.id || decoded._id,
+      _id: decoded.id || decoded._id
+    };
     next();
   } catch (err) {
     console.error('Token verification failed:', err.message);
@@ -30,4 +34,4 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-module.exports = { verifyToken }; // ✅ Named export
+module.exports = { verifyToken };

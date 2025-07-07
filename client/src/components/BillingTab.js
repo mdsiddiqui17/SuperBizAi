@@ -1,7 +1,6 @@
-// components/AccountSettings/BillingTab.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './BillingTab.css';
+import '../styles/BillingTab.css';
 
 export default function BillingTab() {
   const [plan, setPlan] = useState(null);
@@ -11,7 +10,7 @@ export default function BillingTab() {
   const fetchBillingData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/billing/info', {
+      const res = await axios.get('/api/billing/info', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPlan(res.data.plan);
@@ -52,33 +51,6 @@ export default function BillingTab() {
           </li>
         ))}
       </ul>
-
-      {/* Modal for Upgrade Plans */}
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h4>Choose a Plan</h4>
-            <div className="plans-grid">
-              <div className="plan-option">
-                <h5>Basic</h5>
-                <p>$29/mo</p>
-                <button>Choose</button>
-              </div>
-              <div className="plan-option">
-                <h5>Pro</h5>
-                <p>$69/mo</p>
-                <button>Choose</button>
-              </div>
-              <div className="plan-option">
-                <h5>Agency</h5>
-                <p>$159/mo</p>
-                <button>Choose</button>
-              </div>
-            </div>
-            <button className="close-modal" onClick={() => setShowModal(false)}>Close</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

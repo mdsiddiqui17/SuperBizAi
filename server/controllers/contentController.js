@@ -1,7 +1,6 @@
 const axios = require('axios');
 const ContentProfile = require('../models/ContentProfile');
 const fs = require('fs');
-const path = require('path');
 
 exports.generateContent = async (req, res) => {
   try {
@@ -13,12 +12,12 @@ exports.generateContent = async (req, res) => {
       'ad_copy',
       'email_newsletter',
       'product_description',
-      'Image' // Assuming 'Image' is also a valid type based on existing logic
+      'Image'
     ];
 
     if (!contentType || !ALLOWED_CONTENT_TYPES.includes(contentType)) {
       return res.status(400).json({
-        message: `Invalid contentType provided. Please use one of the allowed types: ${ALLOWED_CONTENT_TYPES.join(', ')}`
+        message: `Invalid contentType. Allowed types: ${ALLOWED_CONTENT_TYPES.join(', ')}`
       });
     }
 
@@ -80,10 +79,11 @@ Generate ${numberOfPosts} sample ${contentType.toLowerCase()}${numberOfPosts > 1
 
 exports.saveContentProfile = async (req, res) => {
   try {
-    const { companyName, services, brandColors } = req.body;
+    const { companyName, services, brandColors, brandNotes } = req.body;
 
     const logoPath = req.files?.logo?.[0]?.path || null;
     const guidelinesPath = req.files?.guidelines?.[0]?.path || null;
+    const products = req.body.products ? JSON.parse(req.body.products) : [];
 
     const updatedProfile = await ContentProfile.findOneAndUpdate(
       { user: req.user.userId },
@@ -91,8 +91,10 @@ exports.saveContentProfile = async (req, res) => {
         companyName,
         services,
         brandColors: brandColors?.split(',').map(c => c.trim()),
+        brandNotes,
         logo: logoPath,
-        guidelines: guidelinesPath
+        guidelines: guidelinesPath,
+        products
       },
       { new: true, upsert: true }
     );
@@ -101,5 +103,17 @@ exports.saveContentProfile = async (req, res) => {
   } catch (err) {
     console.error('❌ Error saving content profile:', err.message);
     res.status(500).json({ message: 'Failed to save profile' });
+  }
+};
+
+exports.getContentProfile = async (req, res) => {
+  try {
+    const profile = await ContentProfile.findOne({ user: req.user.userId });
+    if (!profile) return res.status(404).json({ message: 'Profile not found' });
+
+    res.json(profile);
+  } catch (err) {
+    console.error('❌ Error fetching profile:', err.message);
+    res.status(500).json({ message: 'Failed to fetch profile' });
   }
 };
