@@ -1,23 +1,39 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 const { verifyToken } = require('../middleware/authMiddleware');
+
 const {
-  createOrder,
-  getOrders,
-  updateOrder,
-  deleteOrder,
-} = require('../controllers/orderController');
+  generateContent,
+  generateMarketingPlan,
+  generateStrategy,
+  saveContentProfile,
+  getContentProfile
+} = require('../controllers/contentController');
 
-// GET all orders for logged-in user
-router.get('/', verifyToken, getOrders);
+// Setup Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + '-' + file.originalname;
+    cb(null, uniqueName);
+  }
+});
+const upload = multer({ storage });
 
-// POST a new order
-router.post('/', verifyToken, createOrder);
-
-// PUT update order by ID
-router.put('/:id', verifyToken, updateOrder);
-
-// DELETE order by ID
-router.delete('/:id', verifyToken, deleteOrder);
+// Routes
+router.post('/generate', verifyToken, generateContent);
+router.post('/marketing-plan', verifyToken, generateMarketingPlan);
+router.post('/strategy', verifyToken, generateStrategy);
+router.post(
+  '/setup',
+  verifyToken,
+  upload.fields([
+    { name: 'logo', maxCount: 1 },
+    { name: 'guidelines', maxCount: 1 }
+  ]),
+  saveContentProfile
+);
+router.get('/profile', verifyToken, getContentProfile);
 
 module.exports = router;

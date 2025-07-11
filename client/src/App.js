@@ -7,18 +7,18 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
-// import Leads from './pages/Leads'; // ❌ Replaced with Sales.js
-import Sales from './pages/Sales'; // ✅ NEW: Sales CRM Wrapper Page
+import Sales from './pages/Sales';
 import Appointments from './pages/Appointments';
 import ContentSetup from './pages/ContentSetup';
-import GenerateContent from './pages/GenerateContent';
+// ❌ Removed old GenerateContent import
+import ContentGeneratorTabs from './pages/ContentGeneratorTabs'; // ✅ New
 import AdCreator from './pages/AdCreator';
 import Scheduler from './pages/Scheduler';
 import ProductsPage from './pages/ProductsPage';
 import NotFound from './pages/NotFound';
 import AccountSettings from './pages/AccountSettings';
 
-// ✅ Productive Space Module Imports
+// Productive Space Module
 import ProductiveSpaceLayout from './modules/ProductiveSpace/ProductiveSpaceLayout';
 import TasksPage from './modules/ProductiveSpace/pages/TasksPage';
 import NotesPage from './modules/ProductiveSpace/pages/NotesPage';
@@ -28,14 +28,14 @@ import WorkspaceLinksPage from './modules/ProductiveSpace/pages/WorkspaceLinksPa
 import TemplatesPage from './modules/ProductiveSpace/pages/TemplatesPage';
 import TemplateBuilderPage from './modules/ProductiveSpace/templateBuilder/pages/TemplateBuilderPage';
 
-// ✅ Analytics Module
+// Analytics
 import AnalyticsPage from './modules/Analytics/pages/AnalyticsPage';
 
-// ✅ Smart Forms Module
+// Smart Forms
 import SmartFormsPage from './modules/SmartForms/pages/SmartFormsPage';
 import PublicFormPage from './modules/SmartForms/pages/PublicFormPage';
 
-// ✅ Competitor Analysis Module
+// Competitor Analysis
 import CompetitorPage from './modules/CompetitorAnalysis/pages/CompetitorPage';
 
 import { ToastContainer } from 'react-toastify';
@@ -125,7 +125,7 @@ function App() {
           path="/generate-content"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <GenerateContent />
+              <ContentGeneratorTabs />
             </ProtectedRoute>
           }
         />

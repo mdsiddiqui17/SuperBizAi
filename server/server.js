@@ -4,12 +4,28 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 const fs = require('fs');
+const listEndpoints = require('express-list-endpoints'); // 📌 Add this
 
 dotenv.config();
 
 const app = express();
 
-// Routes
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ MongoDB connected'))
+.catch(err => console.error('❌ MongoDB connection failed:', err));
+
+// ✅ Route Imports
+console.log('✅ Loading routes...');
 const authRoutes = require('./routes/authRoutes');
 const protectedRoutes = require('./routes/protectedRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
@@ -21,29 +37,12 @@ const imageRoutes = require('./routes/imageRoutes');
 const schedulerRoutes = require('./routes/schedulerRoutes');
 const adRoutes = require('./routes/adRoutes');
 const productRoutes = require('./routes/productRoutes');
-const analyticsRoutes = require('./routes/analytics'); // ✅ Analytics
-const formRoutes = require('./routes/form'); // ✅ Smart Forms
-const competitorRoutes = require('./routes/competitorRoutes'); // ✅ Competitor Analysis
-const orderRoutes = require('./routes/orderRoutes'); // ✅ Orders
+const analyticsRoutes = require('./routes/analytics');
+const formRoutes = require('./routes/form');
+const competitorRoutes = require('./routes/competitorRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Check if critical route file exists
-console.log('✅ Checking if productRoutes.js exists:', fs.existsSync(path.resolve(__dirname, 'routes/productRoutes.js')));
-
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.error('❌ MongoDB connection failed:', err));
-
-// Mount Routes
+// ✅ Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/leads', crmRoutes);
@@ -55,21 +54,24 @@ app.use('/api/images', imageRoutes);
 app.use('/api/scheduler', schedulerRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/analytics', analyticsRoutes);
-app.use('/api/forms', formRoutes); // ✅ Smart Forms
-app.use('/api/competitors', competitorRoutes); // ✅ Competitor Analysis
-app.use('/api/orders', orderRoutes); // ✅ Orders
-app.use('/api', protectedRoutes); // generic protected routes
+app.use('/api/forms', formRoutes);
+app.use('/api/competitors', competitorRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api', protectedRoutes);
 
-// Root Route
+// ✅ Root Route
 app.get('/', (req, res) => {
   res.send('SuperBiz AI Backend is Running 🚀');
 });
 
-// Fallback for 404s
+// ✅ List all registered routes on startup
+console.table(listEndpoints(app));
+
+// ❗ Place this LAST – fallback 404 handler
 app.use((req, res) => {
   res.status(404).json({ message: `No route found for ${req.originalUrl}` });
 });
 
-// Start Server
+// ✅ Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
